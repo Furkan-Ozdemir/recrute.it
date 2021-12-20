@@ -1,0 +1,18 @@
+.person_avatar {
+  width: 40px;
+  margin-right: 10px;
+  padding: 1rem 0;
+}
+.result {
+  margin-top: 1rem;
+  border: 1px solid #ccc;
+}
+.person_title {
+  margin-right: auto;
+}
+.person_language {
+  margin-right: auto;
+}
+.person_link {
+  margin-right: auto;
+}

@@ -4,6 +4,9 @@ from django.contrib import messages
 import requests
 from bs4 import BeautifulSoup
 from .models import Github
+from datetime import datetime
+from django.utils import timezone
+
 
 # Create your views here.
 
@@ -33,66 +36,20 @@ def index(request):
                 new_github = Github(
                     image_url=url["src"],
                     github_url="https://github.com/" + url["alt"].strip("@"),
+                    title=keywords,
+                    language=language,
+                    added_date=datetime.now(tz=timezone.utc),
+                    alt=url["alt"],
                 )
                 new_github.save()
                 print(new_github, new_github.image_url, new_github.github_url)
 
         # messages.info(request, "Github profile added")
-        return redirect("/")
+        return redirect("/results")
 
     return render(request, "index.html")
 
 
-# def register(request):
-#     if request.method == "POST":
-#         username = request.POST["username"]
-#         email = request.POST["email"]
-#         password = request.POST["password"]
-#         password2 = request.POST["password2"]
-
-#         if password == password2:
-#             if User.objects.filter(username=username).exists():
-#                 messages.info(request, "Username taken")
-#                 return redirect("register")
-#             elif User.objects.filter(email=email).exists():
-#                 messages.info(request, "Email taken")
-#                 return redirect("register")
-#             else:
-#                 user = User.objects.create_user(
-#                     username=username, password=password, email=email
-#                 )
-#                 user.save()
-#                 messages.success(request, "User created")
-#                 return redirect("login")
-#         else:
-#             messages.info(request, "Passwords do not match")
-#             return redirect("register")
-#     else:
-#         return render(request, "signup.html")
-
-
-# def login(request):
-#     if request.method == "POST":
-#         username = request.POST["username"]
-#         password = request.POST["password"]
-
-#         user = auth.authenticate(username=username, password=password)
-
-#         if user is not None:
-#             auth.login(request, user)
-#             return redirect("/")
-#         else:
-#             messages.info(request, "Invalid credentials")
-#             return redirect("login")
-#     return render(request, "login.html")
-
-
-# def logout(request):
-#     auth.logout(request)
-#     return redirect("login")
-
-
-def images(request):
-    username = request.user.username
-    github = Github.objects.filter(username=username)
-    return render(request, "images.html", {"github": github})
+def results(request):
+    people = Github.objects.all()
+    return render(request, "results.html", {"people": people})
