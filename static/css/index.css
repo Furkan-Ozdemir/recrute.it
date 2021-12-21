@@ -1,6 +1,10 @@
 * {
   margin: 0;
 }
+::selection {
+  background: #000; /* WebKit/Blink Browsers */
+  color: #fff;
+}
 
 .main {
   display: flex;
@@ -9,6 +13,7 @@
   justify-content: center;
   height: 90vh;
 }
+
 input[type="text"] {
   width: 100%;
   padding: 12px 20px;

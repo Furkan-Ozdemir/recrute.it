@@ -21,6 +21,7 @@ class Github(models.Model):
         datetime.now(tz=timezone.utc), default=timezone.now
     )
     alt = models.CharField(max_length=100, default="")
+    repo_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.github_url
