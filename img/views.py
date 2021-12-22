@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect, reverse
-from django.contrib.auth.models import User, auth
-from django.contrib import messages
 import requests
 from bs4 import BeautifulSoup
 from .models import Github
